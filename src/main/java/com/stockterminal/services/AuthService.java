@@ -10,8 +10,9 @@ import java.sql.SQLException;
 public class AuthService {
     public User register(String username, String password) {
         String sql = "INSERT INTO users(username, password) VALUES(?, ?)";
+        //prepare statements for parsing the params into the query and also prevent the sql injection
         try (Connection conn = DatabaseConfig.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             PreparedStatement pstmt= conn.prepareStatement(sql)) {
             pstmt.setString(1, username);
             pstmt.setString(2, password);
             pstmt.executeUpdate();
