@@ -18,13 +18,14 @@ public class StockApiService {
             conn.setRequestMethod("GET");
             conn.setRequestProperty("User-Agent", "Mozilla/5.0");
             final int responseCode=conn.getResponseCode();
-            if(responseCode==404){
-                System.out.println("No stock found with the symbol"+symbol);
+            if (responseCode != 200) {
+             if (responseCode == 404) {
+              System.out.println("No stock found with the symbol " + symbol);
+            } else {
+             System.out.println("Error: Unable to fetch data. Response code: " + responseCode);
             }
-            else{
-                System.out.println("Could not fetch price for " + symbol + ". Check your internet connection.");
-                return -1;
-            }
+              return -1;
+            }   
             BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             StringBuilder response = new StringBuilder();
             String inputLine;
